@@ -480,12 +480,28 @@
   <span id="musicLabel">Party-Sound</span>
 </button>
 
+<!-- Firebase SDK (compat, damit man keine ES-Module/Build-Tools braucht) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
+
 <script>
 /* ============================================================
-   PARTY-DATUM FÜR DEN COUNTDOWN
-   Hier das echte Datum & die Uhrzeit eurer Party eintragen,
-   im Format 'JJJJ-MM-TTTHH:MM:SS'.
+   FIREBASE-CONFIG
+   Werte aus Firebase-Konsole -> Projekteinstellungen -> Meine Apps
+   HIER FIREBASE-CONFIG EINFÜGEN (siehe 1-firebase-setup-anleitung.md)
    ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyDX98Yf-S0BBZMt84yxJX_r9IercJLLiv4",
+  authDomain: "viki-sandra-geburtstag.firebaseapp.com",
+  projectId: "viki-sandra-geburtstag",
+  storageBucket: "viki-sandra-geburtstag.firebasestorage.app",
+  messagingSenderId: "788097416175",
+  appId: "1:788097416175:web:17cec1917b1070b4d2941a"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+/* PARTY-DATUM FÜR DEN COUNTDOWN */
 const PARTY_DATE = new Date('2026-09-19T19:00:00');
 
 (function countdown(){
@@ -722,13 +738,9 @@ const PARTY_DATE = new Date('2026-09-19T19:00:00');
 })();
 
 /* ============================================================
-   ANMELDUNG -> GOOGLE SHEETS
+   ANMELDUNG -> FIREBASE FIRESTORE
    ============================================================ */
 document.addEventListener('DOMContentLoaded', function () {
-  // WICHTIG: Muss exakt die aktuelle Web-App-URL aus Google Apps Script sein
-  // (Bereitstellen -> Bereitstellungen verwalten -> aktive Web-App-URL).
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuDz6rGhG3_0QkbC5hOzu8--HW3REGaxpTwlC7tFGFjdGhCnM4RoS7ldSoe6lEZiLW/exec";
-
   const form = document.getElementById('form');
   const nameInput = document.getElementById('name');
   const rulesInput = document.getElementById('rulesAccepted');
@@ -777,9 +789,12 @@ document.addEventListener('DOMContentLoaded', function () {
     button.disabled = true;
     button.textContent = 'Anmeldung wird gesendet…';
 
-    const formData = new FormData(form);
-
-    fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData })
+    db.collection('guests').add({
+      name: nameInput.value.trim(),
+      contact: document.getElementById('contact').value.trim(),
+      rulesAccepted: rulesInput.checked,
+      registeredAt: firebase.firestore.FieldValue.serverTimestamp()
+    })
       .then(function () {
         success.classList.add('show');
         form.reset();
