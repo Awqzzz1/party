@@ -1,51 +1,51 @@
 <script>
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwojBRffuKIRQti3lW9lkokfKwH98GISb6wlX-RwZZBUrJKYU20rjik6fZuzZi8pjnn/exec";
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbyuDz6rGhG3_0QkbC5hOzu8--HW3REGaxpTwlC7tFGFjdGhCnM4RoS7ldSoe6lEZiLW/exec";
 
 document.getElementById("form").addEventListener("submit", async function(e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  const form = this;
-  const button = form.querySelector("button");
-  const success = document.getElementById("success");
+    const form = this;
+    const button = form.querySelector("button");
+    const success = document.getElementById("success");
 
-  const name = document.getElementById("name").value.trim();
-  const contact = document.getElementById("contact").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const contact = document.getElementById("contact").value.trim();
 
-  if (!name) return;
+    if (!name) {
+        alert("Bitte gib deinen Namen ein.");
+        return;
+    }
 
-  button.disabled = true;
-  button.textContent = "WIRD GESPEICHERT ...";
+    button.disabled = true;
+    button.textContent = "WIRD GESPEICHERT ...";
 
-  try {
-    await fetch(GOOGLE_SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify({
-        name: name,
-        contact: contact
-      })
-    });
+    try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify({
+                name: name,
+                contact: contact
+            })
+        });
 
-    form.reset();
+        form.reset();
 
-    success.hidden = false;
-    success.textContent =
-      "✓ Anmeldung gesendet! Wir sehen uns bei Viki & Sandra.";
+        success.hidden = false;
+        success.textContent =
+            "✓ Anmeldung erfolgreich! Wir sehen uns bei Viki & Sandra.";
 
-  } catch (error) {
-
-    success.hidden = false;
-    success.textContent =
-      "⚠ Anmeldung konnte nicht gesendet werden. Bitte erneut versuchen.";
-
-  } finally {
+    } catch (error) {
+        success.hidden = false;
+        success.textContent =
+            "⚠ Es ist ein Fehler aufgetreten. Bitte versuche es erneut.";
+    }
 
     button.disabled = false;
     button.textContent = "AUF DIE GÄSTELISTE →";
-
-  }
 });
 </script>
