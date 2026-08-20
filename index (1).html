@@ -33,7 +33,7 @@ section{padding:110px 8vw}.head{max-width:850px;margin-bottom:50px}.num{color:va
 .details{margin-top:30px}.detail{border-top:1px solid var(--line);padding:16px 0;display:grid;grid-template-columns:35px 100px 1fr;gap:10px;font-size:12px}.detail:first-child{border-top:0}.detail b{font-size:11px}.detail span{color:var(--lime)}.detail small{color:var(--muted)}
 .rules{background:#09090d}.rules-list{border-top:1px solid var(--line)}.rule{display:grid;grid-template-columns:60px 1fr;gap:20px;padding:25px 0;border-bottom:1px solid var(--line)}.rule>b{color:var(--lime);font-size:12px}.rule h3{margin:0 0 7px;font-size:19px}.rule p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
 .signup{background:var(--lime);color:#08080a}.signup .num{color:#08080a}.signup-wrap{max-width:1100px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:start}.signup h2{font-size:clamp(50px,7vw,85px);line-height:.9;letter-spacing:-5px}.signup h2 span{color:#fff;text-shadow:2px 2px #08080a}.signup-copy{line-height:1.7;max-width:450px}
-form{background:#0c0c10;color:white;padding:30px;border-radius:16px}label{display:block;font-size:11px;font-weight:900;margin-bottom:8px}input[type=text]{width:100%;padding:15px;background:#17171d;border:1px solid #33333c;border-radius:8px;color:white;margin-bottom:18px;outline:none}input[type=text]:focus{border-color:var(--lime)}.check{display:flex;gap:9px;color:#aaa;font-weight:500;line-height:1.4;margin:3px 0 20px}.check input{accent-color:var(--lime);margin-top:2px}button{width:100%;border:0;cursor:pointer;font-family:inherit}.note{font-size:10px;color:#666;line-height:1.5;margin:13px 0 0}.success{margin-top:14px;padding:13px;border-radius:8px;background:#172006;color:var(--lime);border:1px solid #41510d;font-size:12px}
+form{background:#0c0c10;color:white;padding:30px;border-radius:16px}label{display:block;font-size:11px;font-weight:900;margin-bottom:8px}input[type=text]{width:100%;padding:15px;background:#17171d;border:1px solid #33333c;border-radius:8px;color:white;margin-bottom:18px;outline:none}input[type=text]:focus{border-color:var(--lime)}.check{display:flex;gap:9px;color:#aaa;font-weight:500;line-height:1.4;margin:3px 0 20px}.check input{accent-color:var(--lime);margin-top:2px}button{width:100%;border:0;cursor:pointer;font-family:inherit}.note{font-size:10px;color:#666;line-height:1.5;margin:13px 0 0}.success{margin-top:14px;padding:13px;border-radius:8px;background:#172006;color:var(--lime);border:1px solid #41510d;font-size:12px}.errorbox{margin-top:14px;padding:13px;border-radius:8px;background:#2a0d0d;color:#ff8080;border:1px solid #5c1c1c;font-size:12px}
 footer{border-top:1px solid var(--line);padding:45px 8vw;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#666;font-size:10px;letter-spacing:1px}footer .logo{color:#fff}
 @media(max-width:800px){nav .links{display:none}.hero{padding:80px 6vw;min-height:auto}.hero-disc{display:none}section{padding:80px 6vw}.grid,.location,.signup-wrap{grid-template-columns:1fr}.location .map{order:2}.meta{gap:15px}.hero h1{letter-spacing:-4px}.signup-wrap{gap:40px}.detail{grid-template-columns:30px 85px 1fr}}
 </style>
@@ -109,7 +109,7 @@ footer{border-top:1px solid var(--line);padding:45px 8vw;display:flex;justify-co
       <h2>Dein Name.<br><span>Dein Platz.</span></h2>
       <p class="signup-copy">Du willst dabei sein? Trag deinen Namen ein und bestätige die Hausordnung. Die genaue Location kann den angemeldeten Gästen separat mitgeteilt werden.</p>
     </div>
-    <form id="form" method="POST" action="https://script.google.com/macros/s/AKfycbyuDz6rGhG3_0QkbC5hOzu8--HW3REGaxpTwlC7tFGFjdGhCnM4RoS7ldSoe6lEZiLW/exec" target="googleResponse">
+    <form id="form">
 
 <label for="name">
 NAME *
@@ -169,9 +169,16 @@ hidden>
 
 </div>
 
-</form>
+<div
+id="errorbox"
+class="errorbox"
+hidden>
 
-<iframe name="googleResponse" id="googleResponse" title="Google Anmeldung" style="display:none;"></iframe>
+⚠ Etwas ist schiefgelaufen. Bitte versuche es erneut oder melde dich direkt bei Viki oder Sandra.
+
+</div>
+
+</form>
   </div>
 </section>
 </main>
@@ -184,21 +191,47 @@ hidden>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    // WICHTIG: Diese URL muss exakt die aktuelle Web-App-URL aus Google Apps Script
+    // (Bereitstellen -> Neue Bereitstellung -> Web-App) sein.
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuDz6rGhG3_0QkbC5hOzu8--HW3REGaxpTwlC7tFGFjdGhCnM4RoS7ldSoe6lEZiLW/exec";
+
     const form = document.getElementById("form");
     const success = document.getElementById("success");
+    const errorbox = document.getElementById("errorbox");
     const button = document.getElementById("submitButton");
 
-    form.addEventListener("submit", function () {
+    form.addEventListener("submit", function (event) {
+        // Verhindert das normale (unzuverlässige) Formular-Absenden per iframe/Redirect.
+        event.preventDefault();
+
+        success.hidden = true;
+        errorbox.hidden = true;
         button.disabled = true;
         button.textContent = "ANMELDUNG WIRD GESENDET...";
 
-        setTimeout(function () {
+        const formData = new FormData(form);
+
+        // "no-cors" ist hier notwendig, weil Google Apps Script keine CORS-Header
+        // zurückgibt. Wir können die Antwort dadurch nicht auslesen, aber die
+        // Anfrage selbst kommt zuverlässig an (im Gegensatz zur iframe-Methode,
+        // die bei Googles internem Redirect die Formulardaten verlieren kann).
+        fetch(SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            body: formData
+        })
+        .then(function () {
             success.hidden = false;
-            success.textContent = "✓ Anmeldung gesendet! Du stehst auf der Gästeliste.";
             form.reset();
+        })
+        .catch(function (err) {
+            console.error("Anmeldung fehlgeschlagen:", err);
+            errorbox.hidden = false;
+        })
+        .finally(function () {
             button.disabled = false;
             button.textContent = "AUF DIE GÄSTELISTE →";
-        }, 1200);
+        });
     });
 });
 </script>
