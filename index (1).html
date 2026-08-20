@@ -1,57 +1,1273 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Viki & Sandra – 18. Geburtstag</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#07070b;
+color:white;
+line-height:1.6;
+}
+
+a{
+color:inherit;
+text-decoration:none;
+}
+
+nav{
+position:sticky;
+top:0;
+z-index:1000;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:18px 7%;
+
+background:rgba(7,7,11,.9);
+backdrop-filter:blur(15px);
+
+border-bottom:1px solid #292933;
+}
+
+.logo{
+font-size:20px;
+font-weight:900;
+}
+
+.logo span{
+color:#d9ff38;
+}
+
+.nav-links{
+display:flex;
+gap:25px;
+font-size:13px;
+color:#aaa;
+}
+
+.nav-links a:hover{
+color:#d9ff38;
+}
+
+.nav-button{
+padding:10px 18px;
+border:1px solid #d9ff38;
+border-radius:30px;
+color:#d9ff38;
+font-weight:bold;
+}
+
+.hero{
+
+min-height:90vh;
+
+display:flex;
+align-items:center;
+
+padding:80px 8%;
+
+position:relative;
+
+overflow:hidden;
+
+background:
+radial-gradient(circle at 80% 30%,#ff35dc25,transparent 30%),
+radial-gradient(circle at 20% 80%,#d9ff3820,transparent 30%);
+}
+
+.hero-content{
+max-width:900px;
+}
+
+.tag{
+color:#d9ff38;
+font-size:12px;
+font-weight:bold;
+letter-spacing:4px;
+margin-bottom:20px;
+}
+
+h1{
+
+font-size:
+clamp(60px,12vw,150px);
+
+line-height:.82;
+
+letter-spacing:-8px;
+
+font-weight:950;
+
+margin-bottom:30px;
+}
+
+h1 span{
+color:#d9ff38;
+}
+
+h1 em{
+font-style:normal;
+color:#ff35dc;
+}
+
+.hero-text{
+max-width:650px;
+
+font-size:17px;
+
+color:#aaa;
+
+margin-bottom:30px;
+}
+
+.buttons{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+
+margin-bottom:40px;
+}
+
+.button{
+
+display:inline-block;
+
+padding:15px 22px;
+
+border-radius:8px;
+
+font-weight:bold;
+
+font-size:13px;
+
+border:1px solid #333;
+}
+
+.primary{
+background:#d9ff38;
+color:#08080a;
+border-color:#d9ff38;
+}
+
+.secondary:hover{
+border-color:white;
+}
+
+.stats{
+display:flex;
+gap:30px;
+flex-wrap:wrap;
+}
+
+.stat{
+border-left:1px solid #333;
+padding-left:15px;
+}
+
+.stat strong{
+display:block;
+font-size:13px;
+}
+
+.stat small{
+color:#777;
+font-size:9px;
+letter-spacing:2px;
+}
+
+.ticker{
+
+padding:15px;
+
+border-top:1px solid #292933;
+border-bottom:1px solid #292933;
+
+white-space:nowrap;
+overflow:hidden;
+
+color:#777;
+
+font-size:11px;
+
+font-weight:bold;
+
+letter-spacing:3px;
+}
+
+section{
+padding:100px 8%;
+}
+
+.section-title{
+max-width:800px;
+margin-bottom:45px;
+}
+
+.number{
+color:#d9ff38;
+font-size:11px;
+font-weight:bold;
+letter-spacing:3px;
+}
+
+.section-title h2{
+
+font-size:
+clamp(45px,7vw,90px);
+
+line-height:.9;
+
+letter-spacing:-5px;
+
+margin-top:15px;
+}
+
+.section-title h2 span{
+color:#d9ff38;
+}
+
+.cards{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:1px;
+
+background:#292933;
+}
+
+.card{
+
+background:#07070b;
+
+padding:35px;
+
+min-height:250px;
+}
+
+.card-icon{
+font-size:30px;
+color:#d9ff38;
+margin-bottom:35px;
+}
+
+.card h3{
+font-size:22px;
+margin-bottom:10px;
+}
+
+.card p{
+font-size:14px;
+color:#999;
+}
+
+.location{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:70px;
+
+align-items:center;
+
+background:#0d0d13;
+}
+
+.fake-map{
+
+aspect-ratio:1.2;
+
+border:1px solid #292933;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:60px;
+
+color:#ff35dc;
+
+background:
+linear-gradient(45deg,#101016,#08080c);
+}
+
+.location-text p{
+color:#999;
+margin-bottom:25px;
+}
+
+.details{
+border-top:1px solid #292933;
+}
+
+.detail{
+
+display:grid;
+
+grid-template-columns:
+40px 100px 1fr;
+
+padding:15px 0;
+
+border-bottom:1px solid #292933;
+
+font-size:13px;
+}
+
+.detail span{
+color:#d9ff38;
+}
+
+.detail small{
+color:#999;
+}
+
+.rules{
+background:#09090d;
+}
+
+.rules-list{
+border-top:1px solid #292933;
+}
+
+.rule{
+
+display:grid;
+
+grid-template-columns:
+60px 1fr;
+
+gap:20px;
+
+padding:25px 0;
+
+border-bottom:1px solid #292933;
+}
+
+.rule-number{
+color:#d9ff38;
+font-weight:bold;
+}
+
+.rule h3{
+margin-bottom:5px;
+}
+
+.rule p{
+color:#999;
+font-size:14px;
+}
+
+.signup{
+
+background:#d9ff38;
+
+color:#08080a;
+}
+
+.signup-wrapper{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:70px;
+
+align-items:start;
+}
+
+.signup .number{
+color:#08080a;
+}
+
+.signup h2{
+
+font-size:
+clamp(50px,7vw,90px);
+
+line-height:.9;
+
+letter-spacing:-5px;
+
+margin:15px 0 25px;
+}
+
+.signup h2 span{
+color:white;
+text-shadow:2px 2px #08080a;
+}
+
+.signup-description{
+max-width:500px;
+}
+
+form{
+
+background:#0d0d12;
+
+padding:30px;
+
+border-radius:15px;
+
+color:white;
+}
+
+label{
+
+display:block;
+
+font-size:11px;
+
+font-weight:bold;
+
+margin-bottom:8px;
+}
+
+input[type="text"]{
+
+width:100%;
+
+padding:15px;
+
+margin-bottom:18px;
+
+background:#17171d;
+
+border:1px solid #333;
+
+border-radius:8px;
+
+color:white;
+
+outline:none;
+}
+
+input[type="text"]:focus{
+border-color:#d9ff38;
+}
+
+.checkbox{
+
+display:flex;
+
+gap:10px;
+
+font-size:12px;
+
+color:#aaa;
+
+margin-bottom:20px;
+}
+
+.checkbox input{
+accent-color:#d9ff38;
+}
+
+form button{
+
+width:100%;
+
+padding:16px;
+
+border:0;
+
+border-radius:8px;
+
+background:#d9ff38;
+
+color:#08080a;
+
+font-weight:900;
+
+cursor:pointer;
+}
+
+form button:disabled{
+opacity:.6;
+cursor:wait;
+}
+
+.success{
+
+margin-top:15px;
+
+padding:14px;
+
+background:#172006;
+
+border:1px solid #4d610c;
+
+border-radius:8px;
+
+color:#d9ff38;
+
+font-size:13px;
+}
+
+footer{
+
+padding:40px 8%;
+
+border-top:1px solid #292933;
+
+display:flex;
+
+justify-content:space-between;
+
+gap:20px;
+
+flex-wrap:wrap;
+
+font-size:10px;
+
+color:#666;
+}
+
+@media(max-width:800px){
+
+.nav-links{
+display:none;
+}
+
+.hero{
+padding:70px 6%;
+}
+
+h1{
+letter-spacing:-4px;
+}
+
+section{
+padding:75px 6%;
+}
+
+.cards,
+.location,
+.signup-wrapper{
+grid-template-columns:1fr;
+}
+
+.fake-map{
+order:2;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<a href="#" class="logo">
+VIKI<span>&</span>SANDRA
+</a>
+
+<div class="nav-links">
+
+<a href="#infos">Infos</a>
+
+<a href="#location">Location</a>
+
+<a href="#regeln">Regeln</a>
+
+</div>
+
+<a href="#anmelden"
+class="nav-button">
+ANMELDEN
+</a>
+
+</nav>
+
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="tag">
+18TH BIRTHDAY · 2026
+</div>
+
+<h1>
+
+VIKI
+<span>&</span>
+
+<br>
+
+SANDRA
+
+<br>
+
+<em>18.</em>
+
+</h1>
+
+<p class="hero-text">
+
+Wir werden 18 – und das muss gefeiert werden.
+DJ, Musik, Drinks, Freunde und eine lange Nacht
+voller guter Vibes.
+
+</p>
+
+<div class="buttons">
+
+<a href="#anmelden"
+class="button primary">
+
+JETZT ANMELDEN →
+
+</a>
+
+<a href="#infos"
+class="button secondary">
+
+WAS DICH ERWARTET
+
+</a>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+
+<strong>19:00 UHR</strong>
+
+<small>EINLASS</small>
+
+</div>
+
+<div class="stat">
+
+<strong>OBERBERG</strong>
+
+<small>LOCATION</small>
+
+</div>
+
+<div class="stat">
+
+<strong>16+</strong>
+
+<small>MINDESTALTER</small>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div class="ticker">
+
+DJ ✦ MUSIK ✦ DRINKS ✦ GOOD VIBES ✦
+DANCE ✦ FRIENDS ✦ PARTY ✦ OPEN END ✦
+18TH BIRTHDAY ✦
+
+</div>
+
+
+<section id="infos">
+
+<div class="section-title">
+
+<div class="number">
+01 / WAS DICH ERWARTET
+</div>
+
+<h2>
+
+Eine Nacht.
+
+<br>
+
+<span>Keine Langeweile.</span>
+
+</h2>
+
+</div>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="card-icon">
+♫
+</div>
+
+<h3>
+DJ & Musik
+</h3>
+
+<p>
+Fette Anlage, ordentlich Bass und
+die besten Tracks für eine Nacht,
+bei der getanzt werden darf.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-icon">
+✦
+</div>
+
+<h3>
+Drinks & Vibes
+</h3>
+
+<p>
+Drinks, gute Leute, Chill-Zone und
+jede Menge Zeit zum Quatschen,
+Lachen und Feiern.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-icon">
+∞
+</div>
+
+<h3>
+Lange Nacht
+</h3>
+
+<p>
+Wir feiern gemeinsam so lange
+die Stimmung passt.
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<section class="location"
+id="location">
+
+<div class="fake-map">
+
+📍
+
+</div>
+
+<div class="location-text">
+
+<div class="section-title">
+
+<div class="number">
+02 / LOCATION
+</div>
+
+<h2>
+
+Hier steigt
+
+<br>
+
+<span>die Party.</span>
+
+</h2>
+
+</div>
+
+<p>
+
+Die Party findet in Oberberg statt.
+Die genaue Adresse kann den angemeldeten
+Gästen separat mitgeteilt werden.
+
+</p>
+
+<div class="details">
+
+<div class="detail">
+
+<span>📍</span>
+
+<strong>LOCATION</strong>
+
+<small>Oberberg</small>
+
+</div>
+
+
+<div class="detail">
+
+<span>🕖</span>
+
+<strong>EINLASS</strong>
+
+<small>Ab 19:00 Uhr</small>
+
+</div>
+
+
+<div class="detail">
+
+<span>🔞</span>
+
+<strong>ALTER</strong>
+
+<small>Mindestalter 16 Jahre</small>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="rules"
+id="regeln">
+
+<div class="section-title">
+
+<div class="number">
+03 / HAUSORDNUNG
+</div>
+
+<h2>
+
+Feiern ja.
+
+<br>
+
+<span>Respekt immer.</span>
+
+</h2>
+
+</div>
+
+
+<div class="rules-list">
+
+
+<div class="rule">
+
+<div class="rule-number">
+01
+</div>
+
+<div>
+
+<h3>
+Respekt
+</h3>
+
+<p>
+Behandle alle Gäste und Veranstalter
+respektvoll. Keine Gewalt und kein Stress.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="rule">
+
+<div class="rule-number">
+02
+</div>
+
+<div>
+
+<h3>
+Keine Sachbeschädigung
+</h3>
+
+<p>
+Die Location und ihre Einrichtung
+werden respektiert.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="rule">
+
+<div class="rule-number">
+03
+</div>
+
+<div>
+
+<h3>
+Keine gefährlichen Gegenstände
+</h3>
+
+<p>
+Waffen oder andere gefährliche
+Gegenstände sind nicht erlaubt.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="rule">
+
+<div class="rule-number">
+04
+</div>
+
+<div>
+
+<h3>
+Rücksicht
+</h3>
+
+<p>
+Bitte nehmt auf dem Hin- und Rückweg
+Rücksicht auf Anwohner und andere Personen.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="rule">
+
+<div class="rule-number">
+05
+</div>
+
+<div>
+
+<h3>
+Hilfe
+</h3>
+
+<p>
+Wenn jemand Hilfe braucht oder sich
+unwohl fühlt, sofort die Veranstalter informieren.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="rule">
+
+<div class="rule-number">
+06
+</div>
+
+<div>
+
+<h3>
+Mindestalter 16
+</h3>
+
+<p>
+Das Mindestalter beträgt 16 Jahre.
+Die Veranstalter behalten sich das Hausrecht vor.
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<section class="signup"
+id="anmelden">
+
+<div class="signup-wrapper">
+
+
+<div>
+
+<div class="number">
+04 / GÄSTELISTE
+</div>
+
+<h2>
+
+Dein Name.
+
+<br>
+
+<span>Dein Platz.</span>
+
+</h2>
+
+<p class="signup-description">
+
+Du willst dabei sein?
+Trag deinen Namen ein und bestätige
+die Hausordnung.
+
+</p>
+
+</div>
+
+
+<form id="form">
+
+<label for="name">
+NAME *
+</label>
+
+<input
+id="name"
+name="name"
+type="text"
+placeholder="Vor- & Nachname"
+required
+minlength="2"
+>
+
+
+<label for="contact">
+KONTAKT
+</label>
+
+<input
+id="contact"
+name="contact"
+type="text"
+placeholder="Instagram / E-Mail / Handy"
+>
+
+
+<label class="checkbox">
+
+<input
+type="checkbox"
+required
+>
+
+<span>
+Ich habe die Hausordnung gelesen
+und akzeptiere sie.
+</span>
+
+</label>
+
+
+<button type="submit">
+
+AUF DIE GÄSTELISTE →
+
+</button>
+
+
+<div
+id="success"
+class="success"
+hidden>
+
+✓ Anmeldung erfolgreich!
+
+</div>
+
+
+</form>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<div class="logo">
+VIKI<span>&</span>SANDRA
+</div>
+
+<div>
+18TH BIRTHDAY · OBERBERG · 19:00 · 16+
+</div>
+
+<div>
+MAKE MEMORIES.
+</div>
+
+</footer>
+
+
 <script>
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuDz6rGhG3_0QkbC5hOzu8--HW3REGaxpTwlC7tFGFjdGhCnM4RoS7ldSoe6lEZiLW/exec";
 
-const form = document.getElementById("form");
-const success = document.getElementById("success");
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbyuDz6rGhG3_0QkbC5hOzu8--HW3REGaxpTwlC7tFGFjdGhCnM4RoS7ldSoe6lEZiLW/exec";
 
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
 
-    const name = document.getElementById("name").value.trim();
-    const contact = document.getElementById("contact").value.trim();
-    const button = form.querySelector("button");
+const form =
+document.getElementById("form");
 
-    if (name.length < 2) {
-        alert("Bitte gib deinen Namen ein.");
-        return;
-    }
+const success =
+document.getElementById("success");
 
-    button.disabled = true;
-    button.textContent = "ANMELDUNG WIRD GESENDET...";
 
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify({
-            name: name,
-            contact: contact
-        })
-    })
-    .then(function() {
+form.addEventListener(
+"submit",
+function(event){
 
-        form.reset();
+event.preventDefault();
 
-        success.hidden = false;
-        success.textContent =
-            "✓ Du bist angemeldet! Wir sehen uns bei Viki & Sandra.";
 
-        button.disabled = false;
-        button.textContent = "AUF DIE GÄSTELISTE →";
+const name =
+document.getElementById("name")
+.value
+.trim();
 
-    })
-    .catch(function(error) {
 
-        console.error(error);
+const contact =
+document.getElementById("contact")
+.value
+.trim();
 
-        success.hidden = false;
-        success.textContent =
-            "⚠ Es gab einen Fehler. Bitte versuche es erneut.";
 
-        button.disabled = false;
-        button.textContent = "AUF DIE GÄSTELISTE →";
-    });
-});
+const button =
+form.querySelector("button");
+
+
+if(name.length < 2){
+
+alert(
+"Bitte gib deinen Namen ein."
+);
+
+return;
+
+}
+
+
+button.disabled = true;
+
+button.textContent =
+"ANMELDUNG WIRD GESENDET...";
+
+
+fetch(
+GOOGLE_SCRIPT_URL,
+{
+
+method:"POST",
+
+mode:"no-cors",
+
+headers:{
+"Content-Type":
+"text/plain;charset=utf-8"
+},
+
+body:JSON.stringify({
+
+name:name,
+
+contact:contact
+
+})
+
+}
+
+)
+
+.then(
+function(){
+
+form.reset();
+
+success.hidden=false;
+
+success.textContent =
+"✓ Du bist angemeldet! Wir sehen uns bei Viki & Sandra.";
+
+button.disabled=false;
+
+button.textContent =
+"AUF DIE GÄSTELISTE →";
+
+}
+
+)
+
+.catch(
+function(error){
+
+console.error(error);
+
+success.hidden=false;
+
+success.textContent =
+"⚠ Anmeldung konnte nicht gesendet werden.";
+
+button.disabled=false;
+
+button.textContent =
+"AUF DIE GÄSTELISTE →";
+
+}
+
+);
+
+}
+
+);
+
 </script>
+
+
+</body>
+
+</html>
