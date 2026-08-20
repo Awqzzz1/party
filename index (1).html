@@ -187,29 +187,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("form");
     const success = document.getElementById("success");
     const button = document.getElementById("submitButton");
-    const iframe = document.getElementById("googleResponse");
-
-    let submitted = false;
 
     form.addEventListener("submit", function () {
-        submitted = true;
         button.disabled = true;
         button.textContent = "ANMELDUNG WIRD GESENDET...";
 
         setTimeout(function () {
-            if (!submitted) return;
-
             success.hidden = false;
             success.textContent = "✓ Anmeldung gesendet! Du stehst auf der Gästeliste.";
             form.reset();
             button.disabled = false;
             button.textContent = "AUF DIE GÄSTELISTE →";
-        }, 800);
-    });
-
-    iframe.addEventListener("load", function () {
-        if (!submitted) return;
-        // Die Antwort von Google wird absichtlich im unsichtbaren iframe geladen.
+        }, 1200);
     });
 });
 </script>
